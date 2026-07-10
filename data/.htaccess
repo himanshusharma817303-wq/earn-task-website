@@ -1,0 +1,3 @@
+# Prevent directory listing and deny access to all files in this directory
+Order deny,allow
+Deny from all
