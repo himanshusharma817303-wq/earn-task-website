@@ -1,3 +1,42 @@
+# --- Application Config / Secrets ---
+# Ignore the actual configuration file containing credentials
 config.php
-uploads/*
-data/*
+
+# --- Application Data & Uploads ---
+# Ignore user data and uploads, but preserve the directory structures
+/data/*
+!/data/.htaccess
+!/data/index.html
+
+/uploads/*
+!/uploads/index.html
+
+# --- OS Generated Files ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# --- IDEs and Text Editors ---
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*~
+.project
+.settings/
+.buildpath
+
+# --- PHP/Composer ---
+# vendor/
+composer.lock
+.phpunit.result.cache
+
+# --- Logs ---
+*.log

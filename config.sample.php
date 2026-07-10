@@ -1,7 +1,7 @@
 <?php
 /**
- * Configuration File
- * Configure your event parameters here.
+ * Configuration File Template
+ * Copy this file to config.php and configure your event parameters.
  */
 
 // Event Configuration
@@ -11,7 +11,7 @@ $signup_link = "https://example.com/register"; // Replace with your referral or 
 
 // Admin Settings
 // Access the admin panel at http://yourdomain.com/admin.php
-define('ADMIN_PASSWORD', 'admin123'); // CHANGE THIS PASSWORD FOR SECURITY
+define('ADMIN_PASSWORD', 'YOUR_SECURE_PASSWORD'); // CHANGE THIS PASSWORD FOR SECURITY
 
 // Storage Configuration
 define('DATA_DIR', __DIR__ . '/data');
