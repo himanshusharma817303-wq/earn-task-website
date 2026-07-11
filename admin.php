@@ -136,16 +136,16 @@ if ($is_logged_in) {
     <title>Admin Panel - Quick Task Submissions</title>
     <style>
         :root {
-            --bg-dark: #090c12;
-            --bg-card: #111622;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --accent-gold: #f3ba2f;
-            --accent-gradient: linear-gradient(135deg, #f5b026 0%, #f05a28 100%);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --success-color: #10b981;
-            --error-color: #ef4444;
-            --warning-color: #f59e0b;
+            --bg-dark: #f8fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            --accent-gold: #2563eb;
+            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --success-color: #16a34a;
+            --error-color: #dc2626;
+            --warning-color: #d97706;
         }
 
         * {
@@ -202,12 +202,12 @@ if ($is_logged_in) {
 
         .btn-gold {
             background: var(--accent-gradient);
-            color: #000;
+            color: #ffffff;
         }
 
         .btn-gold:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(243, 186, 47, 0.2);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
 
         .btn-outline {
@@ -217,14 +217,14 @@ if ($is_logged_in) {
         }
 
         .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: #f1f5f9;
+            border-color: #cbd5e1;
         }
 
         .btn-danger {
-            background: rgba(239, 68, 68, 0.1);
+            background: #fef2f2;
             color: var(--error-color);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            border: 1px solid #fca5a5;
         }
 
         .btn-danger:hover {
@@ -238,9 +238,9 @@ if ($is_logged_in) {
             margin: 100px auto 0;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
 
         .login-card h2 {
@@ -263,23 +263,24 @@ if ($is_logged_in) {
 
         .form-input {
             width: 100%;
-            background: rgba(0,0,0,0.3);
+            background: #ffffff;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 12px;
-            color: #fff;
+            color: #0f172a;
             font-size: 0.95rem;
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
         }
 
         .error-message {
             color: var(--error-color);
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
             padding: 10px;
             border-radius: 6px;
             font-size: 0.8rem;
@@ -351,13 +352,14 @@ if ($is_logged_in) {
         }
 
         .filter-link:hover {
-            color: #fff;
+            color: var(--text-main);
+            background: #f1f5f9;
         }
 
         .filter-link.active {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--border-color);
-            color: #fff;
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            color: #1d4ed8;
         }
 
         /* Table design */
@@ -367,7 +369,7 @@ if ($is_logged_in) {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         table {
@@ -377,7 +379,7 @@ if ($is_logged_in) {
         }
 
         th {
-            background: rgba(255, 255, 255, 0.02);
+            background: #f8fafc;
             padding: 16px 20px;
             font-size: 0.8rem;
             color: var(--text-muted);
@@ -398,7 +400,7 @@ if ($is_logged_in) {
         }
 
         tr:hover td {
-            background: rgba(255, 255, 255, 0.01);
+            background: #f8fafc;
         }
 
         .badge {
@@ -411,18 +413,21 @@ if ($is_logged_in) {
         }
 
         .badge-pending {
-            background: rgba(245, 158, 11, 0.1);
+            background: #fffbeb;
             color: var(--warning-color);
+            border: 1px solid #fef3c7;
         }
 
         .badge-approved {
-            background: rgba(16, 185, 129, 0.1);
+            background: #f0fdf4;
             color: var(--success-color);
+            border: 1px solid #bbf7d0;
         }
 
         .badge-rejected {
-            background: rgba(239, 68, 68, 0.1);
+            background: #fef2f2;
             color: var(--error-color);
+            border: 1px solid #fca5a5;
         }
 
         /* Screenshot preview */
@@ -461,23 +466,27 @@ if ($is_logged_in) {
         }
 
         .act-btn-approve {
-            background: rgba(16, 185, 129, 0.1);
+            background: #f0fdf4;
             color: var(--success-color);
+            border: 1px solid #bbf7d0;
         }
 
         .act-btn-approve:hover {
             background: var(--success-color);
-            color: #000;
+            color: #ffffff;
+            border-color: var(--success-color);
         }
 
         .act-btn-reject {
-            background: rgba(245, 158, 11, 0.1);
+            background: #fffbeb;
             color: var(--warning-color);
+            border: 1px solid #fef3c7;
         }
 
         .act-btn-reject:hover {
             background: var(--warning-color);
-            color: #000;
+            color: #ffffff;
+            border-color: var(--warning-color);
         }
 
         /* Clipboard Copy Utility */
@@ -486,10 +495,10 @@ if ($is_logged_in) {
             align-items: center;
             gap: 6px;
             font-family: monospace;
-            background: rgba(0,0,0,0.2);
+            background: #f1f5f9;
             padding: 4px 8px;
             border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid #cbd5e1;
             width: max-content;
         }
 
@@ -505,7 +514,7 @@ if ($is_logged_in) {
         }
 
         .copy-btn:hover {
-            color: #fff;
+            color: #1d4ed8;
         }
 
         /* Modal styling */
@@ -517,7 +526,7 @@ if ($is_logged_in) {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.8);
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -527,7 +536,7 @@ if ($is_logged_in) {
             max-width: 90%;
             max-height: 90vh;
             border-radius: 8px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: block;
         }
 
@@ -555,12 +564,12 @@ if ($is_logged_in) {
             bottom: 20px;
             right: 20px;
             background: var(--success-color);
-            color: #000;
+            color: #ffffff;
             padding: 10px 20px;
             border-radius: 6px;
             font-weight: 700;
             font-size: 0.85rem;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
             display: none;
             animation: slideUp 0.3s ease forwards;
             z-index: 2000;

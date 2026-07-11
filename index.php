@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // BEP-20 (BSC) address format check: 0x followed by 40 hex characters
     if (!preg_match('/^0x[a-fA-F0-9]{40}$/', $usdtAddress)) {
-        $response['message'] = 'Invalid USDT BEP-20 address format. It must start with 0x and be 42 characters long.';
+        $response['message'] = 'Wrong USDT BEP-20 address. It must start with 0x and be 42 characters long.';
         echo json_encode($response);
         exit;
     }
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             UPLOAD_ERR_INI_SIZE => 'File exceeds upload limit set by server.',
             UPLOAD_ERR_FORM_SIZE => 'File is too large.',
             UPLOAD_ERR_PARTIAL => 'File was only partially uploaded.',
-            UPLOAD_ERR_NO_FILE => 'Please upload a screenshot of your User ID.',
+            UPLOAD_ERR_NO_FILE => 'Please upload screenshot of your User ID.',
             UPLOAD_ERR_NO_TMP_DIR => 'Server missing temporary folder.',
             UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk.',
             UPLOAD_ERR_EXTENSION => 'A PHP extension stopped the file upload.'
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
     if ($fileSize > $max_file_size) {
-        $response['message'] = 'Screenshot is too large. Max size allowed is ' . ($max_file_size / (1024 * 1024)) . 'MB.';
+        $response['message'] = 'Screenshot size is too big. Maximum allowed size is ' . ($max_file_size / (1024 * 1024)) . 'MB.';
         echo json_encode($response);
         exit;
     }
@@ -144,18 +144,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Inline CSS for instant loading -->
     <style>
         :root {
-            --bg-dark: #0a0d14;
-            --card-bg: rgba(20, 24, 35, 0.7);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --accent-gold: #f3ba2f;
-            --accent-orange: #f05a28;
-            --accent-gradient: linear-gradient(135deg, #f5b026 0%, #f05a28 100%);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --success-color: #10b981;
-            --error-color: #ef4444;
-            --shadow-glow: 0 0 25px rgba(243, 186, 47, 0.15);
-            --transition-speed: 0.3s;
+            --bg-dark: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --accent-gold: #2563eb;
+            --accent-orange: #1d4ed8;
+            --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --success-color: #16a34a;
+            --error-color: #dc2626;
+            --shadow-glow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.2s;
         }
 
         * {
@@ -178,28 +178,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             position: relative;
         }
 
-        /* Abstract glowing particles in background */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(243, 186, 47, 0.1) 0%, transparent 70%);
-            top: 10%;
-            left: -100px;
-            z-index: 0;
-            pointer-events: none;
-        }
-        body::after {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(240, 90, 40, 0.1) 0%, transparent 70%);
-            bottom: 20%;
-            right: -100px;
-            z-index: 0;
-            pointer-events: none;
+        /* Abstract glowing particles in background - disabled for clean light theme */
+        body::before, body::after {
+            display: none;
         }
 
         /* Mobile Frame Container */
@@ -207,21 +188,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             width: 100%;
             max-width: 480px;
             min-height: 100vh;
-            background: linear-gradient(180deg, #101422 0%, #0a0d14 100%);
+            background: #ffffff;
             position: relative;
             z-index: 1;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
             display: flex;
             flex-direction: column;
-            border-left: 1px solid rgba(255, 255, 255, 0.03);
-            border-right: 1px solid rgba(255, 255, 255, 0.03);
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
         }
 
         /* Header / Banner */
         .hero-banner {
             position: relative;
-            background: linear-gradient(135deg, #240c04 0%, #101422 100%);
-            padding: 40px 20px 30px;
+            background: #f8fafc;
+            padding: 30px 20px 25px;
             text-align: center;
             border-bottom: 1px solid var(--card-border);
             overflow: hidden;
@@ -231,106 +212,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .hero-banner::after {
-            content: '';
-            position: absolute;
-            bottom: -50%;
-            width: 200%;
-            height: 100%;
-            background: radial-gradient(ellipse at center, rgba(240, 90, 40, 0.15) 0%, transparent 70%);
-            z-index: 1;
+            display: none;
         }
 
         .floating-badge {
-            background: rgba(243, 186, 47, 0.1);
-            border: 1px solid rgba(243, 186, 47, 0.3);
-            color: var(--accent-gold);
-            padding: 6px 14px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1d4ed8;
+            padding: 4px 12px;
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
             z-index: 2;
-            animation: pulse 2s infinite;
             display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 15px rgba(243, 186, 47, 0.2); }
-            100% { transform: scale(1); opacity: 0.9; }
-        }
-
         .hero-title {
-            font-size: 2.2rem;
-            font-weight: 800;
+            font-size: 2rem;
+            font-weight: 700;
             line-height: 1.2;
-            background: linear-gradient(135deg, #ffffff 30%, #f3ba2f 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #0f172a;
             margin-bottom: 8px;
             z-index: 2;
             letter-spacing: -0.5px;
         }
 
         .hero-subtitle {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             z-index: 2;
         }
 
         /* Reward Banner Card */
         .reward-card {
-            background: rgba(243, 186, 47, 0.04);
-            border: 1px solid rgba(243, 186, 47, 0.15);
-            border-radius: 16px;
-            margin: -20px 20px 25px;
-            padding: 20px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            margin: 20px 20px 25px;
+            padding: 16px;
             z-index: 2;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-glow);
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
         .reward-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -50%;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transform: skewX(-30deg);
-            animation: shine 4s infinite linear;
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
+            display: none;
         }
 
         .reward-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
+            font-size: 0.75rem;
+            color: #15803d;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            font-weight: 600;
         }
 
         .reward-amount {
-            font-size: 2.4rem;
-            font-weight: 900;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #16a34a;
+            margin-bottom: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -340,23 +288,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .reward-amount svg {
             width: 32px;
             height: 32px;
-            fill: #f3ba2f;
+            fill: #16a34a;
         }
 
         .reward-note {
             font-size: 0.75rem;
-            color: var(--accent-gold);
-            background: rgba(243, 186, 47, 0.1);
+            color: #166534;
+            background: #dcfce7;
             padding: 4px 10px;
             border-radius: 6px;
             display: inline-block;
+            font-weight: 600;
         }
 
-        /* Rolling recent participants ticker (Very Chinese Event Page Style) */
+        /* Rolling recent participants ticker */
         .live-ticker {
-            background: rgba(10, 13, 20, 0.6);
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
             padding: 8px 15px;
             margin-bottom: 20px;
             overflow: hidden;
@@ -375,12 +324,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 0.65rem;
             text-transform: uppercase;
             flex-shrink: 0;
-            animation: flash 1.5s infinite;
-        }
-
-        @keyframes flash {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
         }
 
         .ticker-wrapper {
@@ -406,7 +349,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .ticker-item span.highlight {
-            color: var(--accent-gold);
+            color: #16a34a;
             font-weight: 600;
         }
 
@@ -436,17 +379,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .section-title {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 8px;
             letter-spacing: 0.5px;
+            color: #0f172a;
         }
 
         .section-title span {
-            background: var(--accent-gradient);
+            background: #2563eb;
             width: 4px;
             height: 16px;
             border-radius: 2px;
@@ -464,21 +408,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .step-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 8px;
+            padding: 14px;
             display: flex;
             align-items: flex-start;
-            gap: 14px;
+            gap: 12px;
             transition: border-color var(--transition-speed);
         }
 
         .step-card:hover {
-            border-color: rgba(243, 186, 47, 0.2);
+            border-color: #cbd5e1;
         }
 
         .step-number {
-            background: var(--accent-gradient);
-            color: #000;
+            background: #eff6ff;
+            color: #2563eb;
             width: 24px;
             height: 24px;
             border-radius: 50%;
@@ -509,38 +453,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .step-action-btn {
-            background: rgba(243, 186, 47, 0.1);
-            color: var(--accent-gold);
-            border: 1px solid rgba(243, 186, 47, 0.2);
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
             padding: 8px 14px;
-            border-radius: 8px;
+            border-radius: 6px;
             font-size: 0.8rem;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 6px;
             margin-top: 10px;
-            transition: all var(--transition-speed);
+            transition: background var(--transition-speed);
         }
 
         .step-action-btn:hover {
-            background: var(--accent-gradient);
-            color: #000;
-            border-color: transparent;
-            transform: translateY(-2px);
+            background: #1d4ed8;
+            color: #ffffff;
         }
 
         /* Form styling */
         .submission-form {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
         }
 
         .form-group {
@@ -551,8 +491,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: block;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-main);
+            margin-bottom: 6px;
+            color: #334155;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -561,39 +501,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .form-label svg {
             width: 16px;
             height: 16px;
-            fill: var(--accent-gold);
+            fill: #64748b;
         }
 
         .form-input {
             width: 100%;
-            background: rgba(10, 13, 20, 0.8);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 12px 14px;
-            color: #fff;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #0f172a;
             font-size: 0.9rem;
-            transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+            transition: border-color var(--transition-speed);
         }
 
         .form-input:focus {
             outline: none;
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 10px rgba(243, 186, 47, 0.15);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
         }
 
         .form-input::placeholder {
-            color: #4b5563;
+            color: #94a3b8;
         }
 
         /* File upload zone */
         .upload-zone {
-            border: 2px dashed var(--card-border);
-            border-radius: 10px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
             padding: 20px;
             text-align: center;
             cursor: pointer;
             transition: border-color var(--transition-speed), background var(--transition-speed);
-            background: rgba(10, 13, 20, 0.4);
+            background: #f8fafc;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -604,29 +544,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .upload-zone.dragover {
-            border-color: var(--accent-gold);
-            background: rgba(243, 186, 47, 0.05);
+            border-color: #2563eb;
+            background: #eff6ff;
         }
 
         .upload-icon {
             width: 36px;
             height: 36px;
-            fill: var(--text-muted);
+            fill: #94a3b8;
             margin-bottom: 8px;
             transition: fill var(--transition-speed);
         }
 
         .upload-zone:hover .upload-icon {
-            fill: var(--accent-gold);
+            fill: #2563eb;
         }
 
         .upload-text {
             font-size: 0.8rem;
-            color: var(--text-muted);
+            color: #64748b;
         }
 
         .upload-text span {
-            color: var(--accent-gold);
+            color: #2563eb;
             font-weight: 600;
         }
 
@@ -639,9 +579,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: none;
             width: 100%;
             position: relative;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
-            border: 1px solid var(--card-border);
+            border: 1px solid #e2e8f0;
         }
 
         .preview-image {
@@ -649,7 +589,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             height: auto;
             max-height: 180px;
             object-fit: contain;
-            background: #000;
+            background: #f8fafc;
             display: block;
         }
 
@@ -670,7 +610,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-size: 0.8rem;
             font-weight: 700;
             transition: background var(--transition-speed);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
         .remove-preview:hover {
@@ -679,8 +619,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         /* Error Banner */
         .error-banner {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
             color: var(--error-color);
             padding: 10px 12px;
             border-radius: 8px;
@@ -701,16 +641,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         /* Submit Button */
         .submit-btn {
             width: 100%;
-            background: var(--accent-gradient);
+            background: #2563eb;
             border: none;
-            color: #000;
-            padding: 14px 20px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 800;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all var(--transition-speed);
-            box-shadow: 0 4px 15px rgba(240, 90, 40, 0.3);
+            transition: background var(--transition-speed);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -718,12 +657,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .submit-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(240, 90, 40, 0.5);
-        }
-
-        .submit-btn:active:not(:disabled) {
-            transform: translateY(0);
+            background: #1d4ed8;
         }
 
         .submit-btn:disabled {
@@ -735,8 +669,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .spinner {
             width: 18px;
             height: 18px;
-            border: 2px solid rgba(0, 0, 0, 0.1);
-            border-top: 2px solid #000;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid #ffffff;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             display: none;
@@ -747,7 +681,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             100% { transform: rotate(360deg); }
         }
 
-        /* Success Overlay Screen (Single page seamless change) */
+        /* Success Overlay Screen */
         .success-overlay {
             display: none;
             flex-direction: column;
@@ -766,8 +700,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .success-icon-wrapper {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            background: #dcfce7;
+            border: 1px solid #bbf7d0;
             width: 72px;
             height: 72px;
             border-radius: 50%;
@@ -775,7 +709,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             align-items: center;
             justify-content: center;
             margin-bottom: 24px;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
         }
 
         .success-icon-wrapper svg {
@@ -787,7 +720,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .success-title {
             font-size: 1.8rem;
             font-weight: 800;
-            color: #fff;
+            color: #0f172a;
             margin-bottom: 12px;
         }
 
@@ -800,7 +733,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .success-text span {
-            color: var(--accent-gold);
+            color: #16a34a;
             font-weight: 700;
         }
 
@@ -809,20 +742,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-align: center;
             padding: 20px;
             font-size: 0.75rem;
-            color: #4b5563;
-            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            color: #64748b;
+            border-top: 1px solid #e2e8f0;
             margin-top: auto;
         }
 
         /* Info box */
         .info-box {
-            background: rgba(243, 186, 47, 0.03);
-            border: 1px solid rgba(243, 186, 47, 0.1);
+            background: #fffbeb;
+            border: 1px solid #fef3c7;
             border-radius: 8px;
             padding: 12px;
             margin-top: 15px;
             font-size: 0.75rem;
-            color: var(--text-muted);
+            color: #b45309;
             line-height: 1.4;
             display: flex;
             gap: 8px;
@@ -831,7 +764,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .info-box svg {
             width: 14px;
             height: 14px;
-            fill: var(--accent-gold);
+            fill: #d97706;
             flex-shrink: 0;
             margin-top: 2px;
         }
@@ -847,15 +780,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="hero-banner">
                 <div class="floating-badge">
                     <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                    Airdrop Event
+                    Reward Event
                 </div>
                 <h1 class="hero-title">Quick Earn Task</h1>
-                <p class="hero-subtitle">Complete 1 simple step & submit details</p>
+                <p class="hero-subtitle">Just complete 1 simple task and submit your details</p>
             </div>
 
             <!-- Reward Card -->
             <div class="reward-card">
-                <div class="reward-label">Instant Reward Pool</div>
+                <div class="reward-label">Total Reward Pool</div>
                 <div class="reward-amount">
                     <!-- USDT custom SVG icon -->
                     <svg viewBox="0 0 128 128">
@@ -863,9 +796,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <path fill="#FFF" d="M64 16v18.7c2.6 0 5.1.1 7.6.4v-19c-2.5-.2-5-.3-7.6-.3s-5.1.1-7.6.3v19c2.5-.3 5-.4 7.6-.4zm-22.9 6.2l9.4 16.3c1.7-2 3.6-3.8 5.7-5.3L46.8 17c-1.9 1.5-3.6 3.2-5.1 5.2zm45.8 0c-1.5-2-3.2-3.7-5.1-5.2l-9.4 16.2c2.1 1.5 4 3.3 5.7 5.3l8.8-16.3zm-57 26.6l16.3 9.4c.5-2.6 1.4-5.1 2.5-7.5l-16.2-9.4c-1.2 2.4-2 5-2.6 7.5zm68.2-7.5c1.1 2.4 2 4.9 2.5 7.5l16.3-9.4c-.6-2.5-1.4-5.1-2.6-7.5l-16.2 9.4zM16 64c0 2.6.1 5.1.3 7.6h19c-.3-2.5-.4-5-.4-7.6s.1-5.1.4-7.6h-19c-.2 2.5-.3 5.1-.3 7.6zm19.3 22.9l-16.3 9.4c1.5 2 3.2 3.6 5.2 5.1l9.4-16.3c-2-1.7-3.8-3.6-5.3-5.7c2-1.7 3.8-3.6 5.3-5.7zm57.7 5.7c1.7 2 3.6 3.8 5.7 5.3l9.4-16.3c-2-1.5-3.7-3.2-5.2-5.1l-9.9 16.1zm-45 3l-9.4 16.3c2 1.5 3.7 3.2 5.2 5.1l9.4-16.3c-2.1-1.7-4-3.6-5.7-5.3l.5.2z"/>
                         <path fill="#FFF" d="M78 48.7c0-2.3-6.2-4.2-14-4.2s-14 1.9-14 4.2 6.2 4.2 14 4.2 14-1.9 14-4.2zm-14 8.2c-10 0-18.7-3-20.7-7V62c2 4 10.7 7 20.7 7s18.7-3 20.7-7v-12.1c-2 4.1-10.7 7.1-20.7 7.1zm0 13c-10 0-18.7-3-20.7-7v12.1c2 4 10.7 7 20.7 7s18.7-3 20.7-7V69.9c-2 4.1-10.7 7.1-20.7 7.1zm0 13c-10 0-18.7-3-20.7-7v12.1c2 4 10.7 7 20.7 7s18.7-3 20.7-7V82.9c-2 4.1-10.7 7.1-20.7 7.1zm0 13c-10 0-18.7-3-20.7-7V98c2 4 10.7 7 20.7 7s18.7-3 20.7-7v-12.1c-2 4.1-10.7 7.1-20.7 7.1z"/>
                     </svg>
-                    Win Up To <?php echo htmlspecialchars($reward_amount); ?>
+                    Get <?php echo htmlspecialchars($reward_amount); ?> Reward
                 </div>
-                <div class="reward-note">⚡ Fast Review & Instant Distribution</div>
+                <div class="reward-note">⚡ Fast Checking & Direct Payout</div>
             </div>
 
             <!-- Live scrolling marquee for social proof -->
@@ -873,13 +806,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="ticker-badge">Live</div>
                 <div class="ticker-wrapper">
                     <div class="ticker-list">
-                        <div class="ticker-item"><span>User ID 942*** submitted</span> <span class="highlight">Success</span></div>
-                        <div class="ticker-item"><span>User ID 108*** submitted</span> <span class="highlight">Success</span></div>
-                        <div class="ticker-item"><span>User ID 684*** won</span> <span class="highlight">+$1.00 USDT</span></div>
-                        <div class="ticker-item"><span>User ID 249*** submitted</span> <span class="highlight">Success</span></div>
-                        <div class="ticker-item"><span>User ID 502*** won</span> <span class="highlight">+$1.00 USDT</span></div>
-                        <div class="ticker-item"><span>User ID 711*** submitted</span> <span class="highlight">Success</span></div>
-                        <div class="ticker-item"><span>User ID 942*** submitted</span> <span class="highlight">Success</span></div> <!-- duplicated first for smooth loop -->
+                        <div class="ticker-item"><span>User ID 942*** details submitted</span> <span class="highlight">Success</span></div>
+                        <div class="ticker-item"><span>User ID 108*** details submitted</span> <span class="highlight">Success</span></div>
+                        <div class="ticker-item"><span>User ID 684*** got reward</span> <span class="highlight">+$1.00 USDT</span></div>
+                        <div class="ticker-item"><span>User ID 249*** details submitted</span> <span class="highlight">Success</span></div>
+                        <div class="ticker-item"><span>User ID 502*** got reward</span> <span class="highlight">+$1.00 USDT</span></div>
+                        <div class="ticker-item"><span>User ID 711*** details submitted</span> <span class="highlight">Success</span></div>
+                        <div class="ticker-item"><span>User ID 942*** details submitted</span> <span class="highlight">Success</span></div> <!-- duplicated first for smooth loop -->
                     </div>
                 </div>
             </div>
@@ -887,16 +820,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="content-section">
                 <!-- Steps Section -->
                 <div class="section-title">
-                    <span></span> Task Steps
+                    <span></span> Follow These Steps
                 </div>
                 <div class="steps-container">
                     <div class="step-card">
                         <div class="step-number">1</div>
                         <div class="step-info">
-                            <div class="step-text">Register / Sign Up</div>
-                            <div class="step-desc">Click the button below, register a new account on our sponsor's website.</div>
+                            <div class="step-text">Step 1: Register on Sponsor Website</div>
+                            <div class="step-desc">Click the button below and create a new account on our sponsor's website.</div>
                             <a href="<?php echo htmlspecialchars($signup_link); ?>" target="_blank" class="step-action-btn">
-                                Register Now 
+                                Click Here to Register 
                                 <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                             </a>
                         </div>
@@ -905,23 +838,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="step-card">
                         <div class="step-number">2</div>
                         <div class="step-info">
-                            <div class="step-text">Copy User ID & Screenshot</div>
-                            <div class="step-desc">Log in, go to your profile, copy your new User ID and take a screenshot showing it clearly.</div>
+                            <div class="step-text">Step 2: Copy your User ID & Take Screenshot</div>
+                            <div class="step-desc">Log in to the account, go to profile page, copy your User ID and take a clean screenshot.</div>
                         </div>
                     </div>
                     
                     <div class="step-card">
                         <div class="step-number">3</div>
                         <div class="step-info">
-                            <div class="step-text">Submit Details</div>
-                            <div class="step-desc">Fill out the form below with your User ID, upload the screenshot, and provide your USDT BEP-20 address.</div>
+                            <div class="step-text">Step 3: Submit Your Details Below</div>
+                            <div class="step-desc">Fill the form below with your correct User ID, screenshot, and USDT BEP-20 wallet address.</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Form Section -->
                 <div class="section-title">
-                    <span></span> Submit Proof
+                    <span></span> Submit Your Details Here
                 </div>
                 
                 <form id="task-form" class="submission-form" enctype="multipart/form-data">
@@ -935,7 +868,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group">
                         <label class="form-label" for="user_id">
                             <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                            Your User ID
+                            Enter Your User ID
                         </label>
                         <input type="text" id="user_id" name="user_id" class="form-input" placeholder="e.g. 8493021" required autocomplete="off">
                     </div>
@@ -943,14 +876,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group">
                         <label class="form-label">
                             <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
-                            Screenshot of User ID
+                            Upload Screenshot of User ID
                         </label>
                         
                         <!-- Drag & Drop upload zone -->
                         <div id="drop-zone" class="upload-zone">
                             <svg class="upload-icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
                             <div class="upload-text" id="upload-instruction">
-                                <span>Click to upload</span> or drag and drop screenshot
+                                <span>Click here to upload</span> or drag screenshot file
                             </div>
                             <input type="file" id="screenshot" name="screenshot" class="file-input" accept="image/*" required>
                             
@@ -965,19 +898,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="form-group">
                         <label class="form-label" for="usdt_address">
                             <svg viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
-                            USDT BEP-20 (BSC) Address
+                            Your USDT BEP-20 Address (BSC Network)
                         </label>
                         <input type="text" id="usdt_address" name="usdt_address" class="form-input" placeholder="0x..." required autocomplete="off">
                     </div>
 
                     <button type="submit" id="submit-btn" class="submit-btn">
-                        <span>Submit Details</span>
+                        <span>Submit Now</span>
                         <div class="spinner" id="btn-spinner"></div>
                     </button>
 
                     <div class="info-box">
                         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                        <div>Multiple submissions or using fake screenshots will result in immediate disqualification. We inspect each entry carefully.</div>
+                        <div>Note: Please do not upload fake screenshots or submit multiple times. If you do this, you will be rejected immediately. We check all details manually.</div>
                     </div>
                 </form>
             </div>
@@ -988,9 +921,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="success-icon-wrapper">
                 <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
             </div>
-            <h2 class="success-title">Thank you!</h2>
-            <p class="success-text">Your submission has been received. <span>If you win, you will get <?php echo htmlspecialchars($reward_amount); ?>.</span> Rewards are sent directly to your BEP-20 wallet after manual verification.</p>
-            <button type="button" onclick="resetForm()" class="step-action-btn" style="margin-top: 0; background: rgba(255,255,255,0.05); color: #fff; border-color: rgba(255,255,255,0.1);">
+            <h2 class="success-title">Form Submitted!</h2>
+            <p class="success-text">We have received your details. <span>Once verified, you will get <?php echo htmlspecialchars($reward_amount); ?> reward.</span> The amount will be sent directly to your BEP-20 wallet after we check the screenshot.</p>
+            <button type="button" onclick="resetForm()" class="step-action-btn" style="margin-top: 0; background: #f3f4f6; color: #1e293b; border: 1px solid #cbd5e1;">
                 Submit Another Entry
             </button>
         </div>
@@ -1054,14 +987,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         function handleFile(file) {
             // Check file type
             if (!file.type.startsWith('image/')) {
-                showError('Please upload a valid image file.');
+                showError('Please upload a valid image.');
                 return;
             }
 
             // Check file size (8MB max)
             const maxSize = 8 * 1024 * 1024;
             if (file.size > maxSize) {
-                showError('Image size should be less than 8MB.');
+                showError('Screenshot size must be less than 8MB.');
                 return;
             }
 
@@ -1103,7 +1036,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             if (!fileInput.files || fileInput.files.length === 0) {
-                showError('Please upload a screenshot of your User ID.');
+                showError('Please upload screenshot of your User ID.');
                 return;
             }
 
@@ -1115,7 +1048,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // BEP-20 Address regex check (0x followed by 40 hex characters)
             const bep20Regex = /^0x[a-fA-F0-9]{40}$/;
             if (!bep20Regex.test(usdtAddress)) {
-                showError('Invalid USDT BEP-20 address format. It must start with "0x" followed by 40 alphanumeric characters.');
+                showError('Wrong USDT BEP-20 address. It must start with "0x" and be 42 characters long.');
                 return;
             }
 
@@ -1151,7 +1084,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             .catch(error => {
                 submitBtn.disabled = false;
                 btnSpinner.style.display = 'none';
-                showError('Something went wrong. Please check your connection and try again.');
+                showError('Something went wrong. Please check your internet connection and try again.');
                 console.error('Error:', error);
             });
         });
