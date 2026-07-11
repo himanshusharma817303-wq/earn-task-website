@@ -46,6 +46,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
+    // Check if User ID or USDT Address has already been submitted
+    if (file_exists(SUBMISSIONS_FILE)) {
+        $jsonData = file_get_contents(SUBMISSIONS_FILE);
+        $submissions = json_decode($jsonData, true);
+        if (is_array($submissions)) {
+            foreach ($submissions as $sub) {
+                if (isset($sub['user_id']) && strcasecmp($sub['user_id'], $userId) === 0) {
+                    $response['message'] = 'This User ID has already been submitted.';
+                    echo json_encode($response);
+                    exit;
+                }
+                if (isset($sub['usdt_address']) && strcasecmp($sub['usdt_address'], $usdtAddress) === 0) {
+                    $response['message'] = 'This USDT Address has already been submitted.';
+                    echo json_encode($response);
+                    exit;
+                }
+            }
+        }
+    }
+    
     // File validation
     if (!isset($_FILES['screenshot']) || $_FILES['screenshot']['error'] !== UPLOAD_ERR_OK) {
         $error_code = isset($_FILES['screenshot']['error']) ? $_FILES['screenshot']['error'] : -1;
@@ -913,7 +933,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2 class="success-title">Form Submitted!</h2>
             <p class="success-text">We have received your details. <span>If you win, you will get <?php echo htmlspecialchars($reward_amount); ?>.</span> The amount will be sent directly to your BEP-20 wallet after we check the screenshot.</p>
             <button type="button" onclick="resetForm()" class="step-action-btn" style="margin-top: 0; background: #f3f4f6; color: #1e293b; border: 1px solid #cbd5e1;">
-                Submit Another Entry
+                Back
             </button>
         </div>
 
