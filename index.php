@@ -141,6 +141,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title><?php echo htmlspecialchars($event_title); ?> - Get Rewarded</title>
     <meta name="description" content="Complete simple tasks and win USDT rewards. Fast, secure, and direct distribution.">
     
+    <!-- Google Font 'Inter' for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <!-- Inline CSS for instant loading -->
     <style>
         :root {
@@ -162,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -768,6 +773,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             flex-shrink: 0;
             margin-top: 2px;
         }
+
+        @media (max-width: 480px) {
+            body {
+                background-color: #ffffff;
+            }
+            .app-container {
+                border-left: none;
+                border-right: none;
+                box-shadow: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -785,7 +801,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <path fill="#FFF" d="M64 16v18.7c2.6 0 5.1.1 7.6.4v-19c-2.5-.2-5-.3-7.6-.3s-5.1.1-7.6.3v19c2.5-.3 5-.4 7.6-.4zm-22.9 6.2l9.4 16.3c1.7-2 3.6-3.8 5.7-5.3L46.8 17c-1.9 1.5-3.6 3.2-5.1 5.2zm45.8 0c-1.5-2-3.2-3.7-5.1-5.2l-9.4 16.2c2.1 1.5 4 3.3 5.7 5.3l8.8-16.3zm-57 26.6l16.3 9.4c.5-2.6 1.4-5.1 2.5-7.5l-16.2-9.4c-1.2 2.4-2 5-2.6 7.5zm68.2-7.5c1.1 2.4 2 4.9 2.5 7.5l16.3-9.4c-.6-2.5-1.4-5.1-2.6-7.5l-16.2 9.4zM16 64c0 2.6.1 5.1.3 7.6h19c-.3-2.5-.4-5-.4-7.6s.1-5.1.4-7.6h-19c-.2 2.5-.3 5.1-.3 7.6zm19.3 22.9l-16.3 9.4c1.5 2 3.2 3.6 5.2 5.1l9.4-16.3c-2-1.7-3.8-3.6-5.3-5.7c2-1.7 3.8-3.6 5.3-5.7zm57.7 5.7c1.7 2 3.6 3.8 5.7 5.3l9.4-16.3c-2-1.5-3.7-3.2-5.2-5.1l-9.9 16.1zm-45 3l-9.4 16.3c2 1.5 3.7 3.2 5.2 5.1l9.4-16.3c-2.1-1.7-4-3.6-5.7-5.3l.5.2z"/>
                         <path fill="#FFF" d="M78 48.7c0-2.3-6.2-4.2-14-4.2s-14 1.9-14 4.2 6.2 4.2 14 4.2 14-1.9 14-4.2zm-14 8.2c-10 0-18.7-3-20.7-7V62c2 4 10.7 7 20.7 7s18.7-3 20.7-7v-12.1c-2 4.1-10.7 7.1-20.7 7.1zm0 13c-10 0-18.7-3-20.7-7v12.1c2 4 10.7 7 20.7 7s18.7-3 20.7-7V69.9c-2 4.1-10.7 7.1-20.7 7.1zm0 13c-10 0-18.7-3-20.7-7v12.1c2 4 10.7 7 20.7 7s18.7-3 20.7-7V82.9c-2 4.1-10.7 7.1-20.7 7.1zm0 13c-10 0-18.7-3-20.7-7V98c2 4 10.7 7 20.7 7s18.7-3 20.7-7v-12.1c-2 4.1-10.7 7.1-20.7 7.1z"/>
                     </svg>
-                    Earn <?php echo htmlspecialchars($reward_amount); ?> Flat
+                    Earn <?php echo htmlspecialchars($reward_amount); ?>
                 </div>
                 <div class="reward-note">⚡ Fast Checking & Direct Payout</div>
             </div>
@@ -895,7 +911,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
             </div>
             <h2 class="success-title">Form Submitted!</h2>
-            <p class="success-text">We have received your details. <span>Once verified, you will get <?php echo htmlspecialchars($reward_amount); ?> Flat.</span> The amount will be sent directly to your BEP-20 wallet after we check the screenshot.</p>
+            <p class="success-text">We have received your details. <span>Once verified, you will get <?php echo htmlspecialchars($reward_amount); ?>.</span> The amount will be sent directly to your BEP-20 wallet after we check the screenshot.</p>
             <button type="button" onclick="resetForm()" class="step-action-btn" style="margin-top: 0; background: #f3f4f6; color: #1e293b; border: 1px solid #cbd5e1;">
                 Submit Another Entry
             </button>
