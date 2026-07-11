@@ -803,7 +803,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </svg>
                     Earn <?php echo htmlspecialchars($reward_amount); ?>
                 </div>
-                <div class="reward-note">⚡ Fast Checking & Direct Payout</div>
+                <div class="reward-note">Selected lucky winners</div>
             </div>
 
             <div class="content-section">
@@ -911,7 +911,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
             </div>
             <h2 class="success-title">Form Submitted!</h2>
-            <p class="success-text">We have received your details. <span>Once verified, you will get <?php echo htmlspecialchars($reward_amount); ?>.</span> The amount will be sent directly to your BEP-20 wallet after we check the screenshot.</p>
+            <p class="success-text">We have received your details. <span>If you win, you will get <?php echo htmlspecialchars($reward_amount); ?>.</span> The amount will be sent directly to your BEP-20 wallet after we check the screenshot.</p>
             <button type="button" onclick="resetForm()" class="step-action-btn" style="margin-top: 0; background: #f3f4f6; color: #1e293b; border: 1px solid #cbd5e1;">
                 Submit Another Entry
             </button>
