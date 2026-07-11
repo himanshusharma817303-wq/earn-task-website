@@ -823,7 +823,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </svg>
                     Earn <?php echo htmlspecialchars($reward_amount); ?>
                 </div>
-                <div class="reward-note">Selected lucky winners</div>
+                <div class="reward-note">200 Lucky Winners Only</div>
             </div>
 
             <div class="content-section">
